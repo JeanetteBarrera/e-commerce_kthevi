@@ -60,7 +60,7 @@
     font-family: var(--font-subtitle);
 }
 .home .products-section .container-items {
-    width: 100%;
+    width: 90%;
     max-width: 1300px;
     margin: 0 auto;
     display: flex;

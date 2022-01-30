@@ -12,6 +12,12 @@ router.get("/signin", signin);
 
 router.get("/products", list);
 
+
+router.get("/products", (req, res) => {
+
+    
+})
+
 module.exports = router;
 
 

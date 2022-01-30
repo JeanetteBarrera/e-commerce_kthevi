@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <%- include('../partials/head') %>
+<body>
+    <!-- header section starts -->
+    <%- include('../partials/header') %>
+    <!-- header section ends -->
+    <main class="panel-admin">
+        <h3 class="title">List Products</h3>
+        <section class="tablas">
+            <table>
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>category</th>
+                        <th>subcategory</th>
+                        <th>name</th>
+                        <th>stock</th>
+                        <th>status</th>
+                        <th>action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% products.forEach(product => { %>
+                    
+                        <tr>
+                            <td data-label="ID"><%= product.id %></td>
+                            <td data-label="CATEGORY" ><%= product.category %></td>
+                            <td data-label="SUBCATEGORY"><%= product.subcategory %></td>
+                            <td data-label="NAME"><%= product.name %></td>
+                            <td data-label="STOCK" ><%= product.stock %></td>
+                            <td data-label="STATUS" class="pl-md">
+                                <span <% if (product.status === true) { %>
+                                    class="available"
+                                <% } else { %>
+                                    class="not-available"
+                                <% } %> 
+                                > 
+                                </span>
+                            </td>
+                            <td data-label="ACTION">
+                                <!-- los dos links son mostrar en caso de estar  -->
+                                <form action="/admin/product/<%= product.id %>?_method=PATCH" method="POST">
+                                    <button type="submit"><i class="<%= (product.status === true)? "fas fa-eye" : "fas fa-eye-slash"%>"></i></button>
+                                </form>
+                                <!-- el siguiente link nos envia a un vista para editar el producto con determinado id -->
+                                <a href="/admin/product/<%= product.id %>"><i class="fas fa-edit"></i></a>
+                                <!-- el siguiente link es para eliminar un producto, con determinado id -->
+                                <form action="/admin/product/<%= product.id %>?_method=DELETE" method="POST">
+                                    <button type="submit"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+    <script src="/js/headerAdmin.js"></script>
+</body>
+
+</html>

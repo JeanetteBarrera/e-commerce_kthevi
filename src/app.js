@@ -19,16 +19,20 @@ app.set('views', path.join(__dirname, '/views')); // Define la ubicación de la 
 
 /*====== REQUIERO ROUTERS =======*/
 let indexRouter = require("./routes/main");
-
+let adminRouter = require('./routes/admin');
+let productRouter = require('./routes/product');
+let userRouter = require('./routes/user')
 
 /*====== ENRUTADORES =======*/
 app.use("/", indexRouter);
+app.use('/admin', adminRouter);
+app.use('/products', productRouter);
+app.use('/users', userRouter);
 
-
-/* ERROR 404 */
+/* ERROR 404 *//*
 app.use((req, res, next) => {
     res.status(404).render('404-page')
-})
+})*/
 
 app.listen(PORT, () => {
     console.log(`Servidor levantado en el puerto ${PORT}`)
