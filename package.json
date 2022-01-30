@@ -1,0 +1,17 @@
+{
+  "name": "challenge_ecommerce_kthevi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "nodemon src/app.js"
+  },
+  "keywords": [],
+  "author": "Jeanette Garcia Barrera",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
+    "method-override": "^3.0.0"
+  }
+}
