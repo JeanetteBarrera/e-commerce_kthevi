@@ -6,7 +6,7 @@ const controller = require("../controllers/adminController")
 
 router.get("/", controller.index);
 
-router.get("/products", controller.listProducst);
+router.get("/products", controller.listProducts);
 
 router.get("/products/:search", controller.search);
 
