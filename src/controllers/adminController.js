@@ -17,6 +17,42 @@ const controller = {
             })
         })
     },
+    paginacion : (req, res) => {
+
+        const getPaginacion = (page, size) => {
+            const limit = size ? +size : 5;
+            const offset = page ? page * limit : 0;
+            return {limit, offset};
+            
+        }
+        const getPagiData = (data, page, limit) => {
+            const {count: totalItems, rows: products} = data;
+            const currentPage = page ? +page : 0;
+            const totalPages = Math.ceil(totalItems / limit);
+            return {totalItems, products, totalPages, currentPage}
+        }
+        
+        const { page, size } = req.query;
+        const { limit, offset } = getPaginacion(page, size);
+
+        /*http://localhost:3000/admin/products/paginacion?page=2 */
+        console.log(limit)
+        console.log(offset)
+        db.Product.findAndCountAll({
+            where: {status: true},
+            limit: limit,
+            offset: offset
+        })
+        .then(response => {
+            const data = getPagiData(response,page, limit )
+            res.render("admin/productList", {
+                title: "List Products - ADMIN",
+                data,
+                session: req.session
+            })
+            
+        })
+    },
     search: (req, res) => {
         res.send("RESULTADO DE BUSQUEDA ADMIN")
     },
@@ -40,7 +76,7 @@ const controller = {
                 tags: ""
             })
             .then(product => {
-                for( let i=0; i < req.body.color.length; i++) {
+                for( let i=0; i < color.length; i++) {
                     db.Variant.create({
                         color: req.body.color[i],
                         image: "default-image.jpg",

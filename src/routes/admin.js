@@ -8,7 +8,9 @@ router.get("/", controller.index);
 
 router.get("/products", controller.listProducts);
 
-router.get("/products/:search", controller.search);
+router.get("/products/paginacion/:page?/:size?", controller.paginacion )
+
+router.get("/products/search", controller.search);
 
 
 /***********    ABM PRODUCTS    **********/

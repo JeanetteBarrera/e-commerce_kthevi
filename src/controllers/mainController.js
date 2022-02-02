@@ -10,6 +10,9 @@ let controller = {
     },
     list: (req, res) => {
         res.render("listProducts")
+    },
+    categories: (req, res) => {
+        
     }
 }
 module.exports= controller;
