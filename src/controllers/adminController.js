@@ -1,9 +1,57 @@
+const db = require("../database/models");
+const fs = require("fs");
+const { validationResult } = require('express-validator');
+
 const controller = {
     index: (req, res) => {
         res.send("INDEX ADMIN")
     }, 
-    listProducst: (req, res) => {
-        res.send("LIST-PRODUCTS ADMIN")
+    listProducts: (req, res) => {
+        /*res.send("LIST-PRODUCTS ADMIN")*/
+        db.Product.findAll()
+        .then(products => {
+            res.render("admin/productList", {
+                title: "List Products - ADMIN",
+                products,
+                session: req.session
+            })
+        })
+    },
+    paginacion : (req, res) => {
+
+        const getPaginacion = (page, size) => {
+            const limit = size ? +size : 5;
+            const offset = page ? page * limit : 0;
+            return {limit, offset};
+            
+        }
+        const getPagiData = (data, page, limit) => {
+            const {count: totalItems, rows: products} = data;
+            const currentPage = page ? +page : 0;
+            const totalPages = Math.ceil(totalItems / limit);
+            return {totalItems, products, totalPages, currentPage}
+        }
+        
+        const { page, size } = req.query;
+        const { limit, offset } = getPaginacion(page, size);
+
+        /*http://localhost:3000/admin/products/paginacion?page=2 */
+        console.log(limit)
+        console.log(offset)
+        db.Product.findAndCountAll({
+            where: {status: true},
+            limit: limit,
+            offset: offset
+        })
+        .then(response => {
+            const data = getPagiData(response,page, limit )
+            res.render("admin/productList", {
+                title: "List Products - ADMIN",
+                data,
+                session: req.session
+            })
+            
+        })
     },
     search: (req, res) => {
         res.send("RESULTADO DE BUSQUEDA ADMIN")
@@ -12,12 +60,74 @@ const controller = {
         res.render("admin/productCreate")
     },
     storeProduct: (req, res) => {
-        res.send("GUARDAR DATOS-PRODUCTO ADMIN")
+        let errors = validationResult(req)
+
+        if(errors.isEmpty()) {
+            const {name, price, discount, description, category, gender, tags, color } = req.body;
+            
+            db.Product.create({
+                name, 
+                price, 
+                discount, 
+                description, 
+                status: true,  
+                category_id: category, 
+                gender: (gender) ? gender : "unisex", 
+                tags: ""
+            })
+            .then(product => {
+                for( let i=0; i < color.length; i++) {
+                    db.Variant.create({
+                        color: req.body.color[i],
+                        image: "default-image.jpg",
+                        product_id: product.id
+                    })
+                    .then(variant => {
+                        let sizes = ["stockS", "stockM", "stockL", "stockXL"]
+                        let stock = []
+
+                        for(let j = 0; j < sizes.length; j++) {
+                            let stockObject = {
+                                product_id: product.id,
+                                variant_id: variant.id,
+                                size_id: j+1,
+                                quantity: req.body[`${sizes[j]}`][i]
+                            }
+                            stock.push(stockObject);
+                        }
+                        db.Stock.bulkCreate(stock)
+                        .then(() => {
+                            res.redirect("admin/products")
+                        })
+                    })
+                }
+            })
+        }
     },
     editProduct: (req, res) => {
-        res.send("FORM EDIT-PRODUCTO ADMIN")
+
+        db.Product.findOne({
+            where: {
+                id: req.params.id
+            },
+            include: [
+                {association: "variants", include: [{association: "stock"}]}
+            ]
+        })
+        .then(product => {
+            db.Category.findAll()
+            .then(categories => {
+                res.render("admin/productEdit", {
+                    categories,
+                    product,
+                    session : req.session,
+                    title: "Product Edit - ADMIN"
+                })
+            })
+        })
     }, 
     updateProduct: (req, res) => {
+
         res.send("ACTUALIZAR-DATOS-PRODUCTO ADMIN")
     }, 
     deleteProduct: (req, res) => {

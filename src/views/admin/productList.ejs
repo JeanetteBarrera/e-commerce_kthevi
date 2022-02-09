@@ -9,26 +9,32 @@
     <main class="panel-admin">
         <h3 class="title">List Products</h3>
         <section class="tablas">
+            <div class="filtros">
+                <input type="search" name="name" placeholder="Search...">
+                <select name="color" id="">
+                    <option value=""></option>
+                </select>
+            </div>
             <table>
                 <thead>
                     <tr>
                         <th>id</th>
                         <th>category</th>
-                        <th>subcategory</th>
                         <th>name</th>
+                        <th>color</th>
                         <th>stock</th>
                         <th>status</th>
                         <th>action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% products.forEach(product => { %>
+                    <% data.products.forEach(product => { %>
                     
                         <tr>
                             <td data-label="ID"><%= product.id %></td>
                             <td data-label="CATEGORY" ><%= product.category %></td>
-                            <td data-label="SUBCATEGORY"><%= product.subcategory %></td>
                             <td data-label="NAME"><%= product.name %></td>
+                            <td data-label="COLOR"><%= product.color %></td>
                             <td data-label="STOCK" ><%= product.stock %></td>
                             <td data-label="STATUS" class="pl-md">
                                 <span <% if (product.status === true) { %>
@@ -55,10 +61,15 @@
                         <% }) %>
                 </tbody>
             </table>
+            <div class="pages">
+                <% for( let i = 0; i < data.totalPages; i++) { %>
+                    <a href="/admin/products/paginacion?page=<%= i %>"><%= i+1 %> </a>
+                <% } %>
+            </div>
         </section>
 
     </main>
-    <script src="/js/headerAdmin.js"></script>
+    <script src="/js/header.js"></script>
 </body>
 
 </html>

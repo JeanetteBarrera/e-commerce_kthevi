@@ -113,8 +113,9 @@
 }
 .panel-admin .tablas table tbody tr form button {
     background: none;
+    border: none;
 }
-.panel-admin .tablas table tbody tr a,
+.panel-admin .tablas table tbody tr a i,
 .panel-admin .tablas table tbody tr .fa-trash-alt,
 .panel-admin .tablas table tbody tr .fa-eye,
 .panel-admin .tablas table tbody tr .fa-eye-slash
@@ -128,6 +129,33 @@
 .panel-admin .tablas table tbody tr .fa-eye:hover,
 .panel-admin .tablas table tbody tr .fa-eye-slash:hover {
     color: var(--main-color)
+}
+.panel-admin .tablas .pages {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem 0;
+}
+.panel-admin .tablas .pages a {
+    font-size: 1.3rem;
+    padding: .5rem .7rem;
+    margin-left: .2rem;
+    background-color: #585858;
+    border:solid 1px white;
+    color:white;
+    border-radius: 3px;
+}
+.panel-admin .tablas .filtros {
+    background-color: #585858;
+    border:solid 1px white;
+    padding: 1rem 0;
+}
+.panel-admin .tablas .filtros input {
+    border: solid 1px white;
+    border-radius: 2px;
+    line-height: 2rem;
+    width: 30%;
+    margin-left: 1rem;
+    padding-left: 1rem;
 }
 @media(max-width:767px){
     
@@ -158,7 +186,7 @@
     .panel-admin .tablas table tbody tr td,
     .panel-admin .tablas table tbody tr td.pl-md  {
     text-align: right;
-    padding-right: 15px;;
+    padding-right: 15px;
     position: relative;
     border: 1px solid rgb(199, 195, 195);
     }

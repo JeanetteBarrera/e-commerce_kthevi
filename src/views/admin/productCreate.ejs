@@ -9,7 +9,7 @@
             <!-- header section ends -->
             <main class="productForm">
                 <h3 class="title">Create product</h3>
-                <form action="/admin/product" method="POST" enctype="multipart/form-data">
+                <form action="/admin/product" method="POST">
 
                     <select name="category" id="">
                         <option value="" selected hidden>Seleccione una categoria</option>
@@ -51,30 +51,30 @@
                         <div class="container">
 
                             <label for="color">Select color : </label>
-                            <input type="color" name="color[]" id="inputColor" class="h-10">
+                            <input type="color" name="color" id="inputColor" class="h-10">
 
                             <div class="x">
 
                                 <label class="">Sizes - Stock/Quantity</label>
                                 <div>
                                     <b>S : </b>
-                                    <input type="number" name="stockS[]" value="0" placeholder="stock/cantidad"
+                                    <input type="number" name="stockS" value="0" placeholder="stock/cantidad"
                                         class="">
                                 </div>
                                 <div>
                                     <b>M : </b>
-                                    <input type="number" name="stockM[]" value="0" placeholder="stock/cantidad"
+                                    <input type="number" name="stockM" value="0" placeholder="stock/cantidad"
                                         class="">
                                 </div>
 
                                 <div>
                                     <b>L : </b>
-                                    <input type="number" name="stockL[]" value="0" placeholder="stock/cantidad"
+                                    <input type="number" name="stockL" value="0" placeholder="stock/cantidad"
                                         class="">
                                 </div>
                                 <div>
                                     <b>XL : </b>
-                                    <input type="number" name="stockXL[]" value="0" placeholder="stock/cantidad"
+                                    <input type="number" name="stockXL" value="0" placeholder="stock/cantidad"
                                         class="">
                                 </div>
                             </div>
